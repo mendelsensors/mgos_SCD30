@@ -61,9 +61,9 @@ boolean TSL2561::begin(void) {
     // Initialise I2C
     Wire.beginTransmission(_addr);
 #if ARDUINO >= 100
-    Wire.write(TSL2561_REGISTER_ID);
+    Wire.write(TSL2561_COMMAND_BIT | TSL2561_REGISTER_ID);
 #else
-    Wire.send(TSL2561_REGISTER_ID);
+    Wire.send(TSL2561_COMMAND_BIT | TSL2561_REGISTER_ID);
 #endif
     Wire.endTransmission();
     Wire.requestFrom(_addr, 1);
