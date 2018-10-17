@@ -7,7 +7,7 @@ TSL2561 *mgos_tsl2561_create(uint8_t addr = TSL2561_ADDR_FLOAT) {
 
 int mgos_tsl2561_begin(TSL2561 *tsl) {
     if (tsl == nullptr) return 0;
-	LOG(LL_INFO, ("test1"));
+	//LOG(LL_INFO, ("test1"));
     return tsl->begin();
 }
 
