@@ -57,6 +57,7 @@ TSL2561::TSL2561(uint8_t addr) {
 }
 
 boolean TSL2561::begin(void) {
+	LOG(LL_INFO, ("test2"));
     Wire.begin();
 
     // Initialise I2C
