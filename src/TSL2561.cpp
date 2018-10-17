@@ -73,7 +73,7 @@ boolean TSL2561::begin(void) {
     int x = Wire.receive();
 #endif
     //Serial.print("0x"); Serial.println(x, HEX);
-    if (x & 0x0A) {
+    if (x & 0x50) {
         //Serial.println("Found TSL2561");
     } else {
         return false;
