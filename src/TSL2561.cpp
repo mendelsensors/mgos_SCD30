@@ -45,6 +45,7 @@
 #include <stdlib.h>
 
 #include "TSL2561.h"
+#include "mgos.h"
 
 TSL2561::TSL2561(uint8_t addr) {
     _addr = addr;
@@ -74,10 +75,12 @@ boolean TSL2561::begin(void) {
 #endif
     //Serial.print("0x"); Serial.println(x, HEX);
     if ((x & 0x50)==0x50) {
-		printf("TSL2561 found\n");
+		//printf("TSL2561 found\n");
+		LOG(LL_INFO, ("TSL2561 device found"));
         //Serial.println("Found TSL2561");
     } else {
-		printf("TSL2561 not found\n");
+		//printf("TSL2561 not found\n");
+		LOG(LL_INFO, ("TSL2561 device not found"));
         return false;
     }
     _initialized = true;
