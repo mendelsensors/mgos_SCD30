@@ -75,7 +75,7 @@ boolean TSL2561::begin(void) {
     int x = Wire.receive();
 #endif
     //Serial.print("0x"); Serial.println(x, HEX);
-    if ((x & 0x50)==0x50) {
+    if ((x & 0xf0)==0x50) {
 		printf("TSL2561 found id=0x%x\n",x);
 		//LOG(LL_INFO, ("TSL2561 device found"));
         //Serial.println("Found TSL2561");
