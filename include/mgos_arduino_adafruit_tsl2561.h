@@ -4,6 +4,7 @@
 #ifndef ARDUINO_ADAFRUIT_TSL2561_MGOS_ARDUINO_ADAFRUIT_TSL2561_H
 #define ARDUINO_ADAFRUIT_TSL2561_MGOS_ARDUINO_ADAFRUIT_TSL2561_H
 
+
 #ifdef __cplusplus
 #include "TSL2561.h"
 #else
@@ -34,6 +35,9 @@ typedef struct TSL2561Tag TSL2561;
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+bool mgos_tsl2561_init(void);
+
 
 /*
  * TSL2561 sensor I2C address is one of:
