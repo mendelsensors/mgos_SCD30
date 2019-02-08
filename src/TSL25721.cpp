@@ -50,7 +50,8 @@
 TSL25721::TSL25721(uint8_t addr) {
     _addr = addr;
     _initialized = false;
-    _integration = TSL25721_INTEGRATIONTIME_13MS;
+    //_integration = TSL25721_INTEGRATIONTIME_13MS;
+    _integration = TSL25721_INTEGRATIONTIME_27MS;
     _gain = TSL25721_GAIN_16X;
 
     // we cant do wire initialization till later, because we havent loaded Wire yet
@@ -119,7 +120,8 @@ void TSL25721::setGain(tsl25721Gain_t gain) {
 
     enable();
     _gain = gain;
-    write8(TSL25721_COMMAND_BIT | TSL25721_REGISTER_TIMING, _integration | _gain);
+    //write8(TSL25721_COMMAND_BIT | TSL25721_REGISTER_TIMING, _integration | _gain);
+    write8(TSL25721_COMMAND_BIT | TSL25721_REGISTER_CONTROL, _gain);
     disable();
 }
 
@@ -128,7 +130,8 @@ void TSL25721::setTiming(tsl25721IntegrationTime_t integration) {
 
     enable();
     _integration = integration;
-    write8(TSL25721_COMMAND_BIT | TSL25721_REGISTER_TIMING, _integration | _gain);
+    //write8(TSL25721_COMMAND_BIT | TSL25721_REGISTER_TIMING, _integration | _gain);
+    write8(TSL25721_COMMAND_BIT | TSL25721_REGISTER_ATIME, _integration);
     disable();
 }
 
@@ -138,8 +141,8 @@ uint32_t TSL25721::calculateLux(uint16_t ch0, uint16_t ch1) {
     unsigned long channel0;
 
     switch (_integration) {
-        case TSL25721_INTEGRATIONTIME_13MS:
-            chScale = TSL25721_LUX_CHSCALE_TINT0;
+        case TSL25721_INTEGRATIONTIME_27MS:
+            chScale = 0xf6;//TSL25721_LUX_CHSCALE_TINT0;
             break;
         case TSL25721_INTEGRATIONTIME_101MS:
             chScale = TSL25721_LUX_CHSCALE_TINT1;
@@ -150,7 +153,7 @@ uint32_t TSL25721::calculateLux(uint16_t ch0, uint16_t ch1) {
     }
 
     // Scale for gain (1x or 16x)
-    if (!_gain) chScale = chScale << 4;
+    //if (!_gain) chScale = chScale << 4;
 
     // scale the channel values
     channel0 = (ch0 * chScale) >> TSL25721_LUX_CHSCALE;
@@ -241,8 +244,8 @@ uint32_t TSL25721::getFullLuminosity(void) {
 
     // Wait x ms for ADC to complete
     switch (_integration) {
-        case TSL25721_INTEGRATIONTIME_13MS:
-            delay(14);
+        case TSL25721_INTEGRATIONTIME_27MS:
+            delay(28);
             break;
         case TSL25721_INTEGRATIONTIME_101MS:
             delay(102);
