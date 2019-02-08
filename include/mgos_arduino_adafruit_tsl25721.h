@@ -1,34 +1,34 @@
 //
 // Created by pedalPusher68 <bradley.1.smith@gmail.com> on 11/10/17.
 //
-#ifndef ARDUINO_ADAFRUIT_TSL2561_MGOS_ARDUINO_ADAFRUIT_TSL2561_H
-#define ARDUINO_ADAFRUIT_TSL2561_MGOS_ARDUINO_ADAFRUIT_TSL2561_H
+#ifndef ARDUINO_ADAFRUIT_TSL2561_MGOS_ARDUINO_ADAFRUIT_TSL25721_H
+#define ARDUINO_ADAFRUIT_TSL2561_MGOS_ARDUINO_ADAFRUIT_TSL25721_H
 
 
 #ifdef __cplusplus
-#include "TSL2561.h"
+#include "TSL25721.h"
 #else
-typedef struct TSL2561Tag TSL2561;
+typedef struct TSL25721Tag TSL25721;
 #endif
 
-#ifndef TSL2561_ADDR_LOW
-#define TSL2561_ADDR_LOW  0x29
+#ifndef TSL25721_ADDR_LOW
+#define TSL25721_ADDR_LOW  0x29
 #endif
-#ifndef TSL2561_ADDR_FLOAT
-#define TSL2561_ADDR_FLOAT 0x39
+#ifndef TSL25721_ADDR_FLOAT
+#define TSL25721_ADDR_FLOAT 0x39
 #endif
-#ifndef TSL2561_ADDR_HIGH
-#define TSL2561_ADDR_HIGH 0x49
+#ifndef TSL25721_ADDR_HIGH
+#define TSL25721_ADDR_HIGH 0x49
 #endif
 
-#ifndef TSL2561_VISIBLE
-#define TSL2561_VISIBLE 2                   // channel 0 - channel 1
+#ifndef TSL25721_VISIBLE
+#define TSL25721_VISIBLE 2                   // channel 0 - channel 1
 #endif
-#ifndef TSL2561_INFRARED
-#define TSL2561_INFRARED 1                  // channel 1
+#ifndef TSL25721_INFRARED
+#define TSL25721_INFRARED 1                  // channel 1
 #endif
-#ifndef TSL2561_FULLSPECTRUM
-#define TSL2561_FULLSPECTRUM 0              // channel 0
+#ifndef TSL25721_FULLSPECTRUM
+#define TSL25721_FULLSPECTRUM 0              // channel 0
 #endif
 
 
@@ -36,7 +36,7 @@ typedef struct TSL2561Tag TSL2561;
 extern "C" {
 #endif
 
-bool mgos_tsl2561_init(void);
+bool mgos_tsl25721_init(void);
 
 
 /*
@@ -66,7 +66,7 @@ bool mgos_tsl2561_init(void);
  *
  * Return value: opaque pointer handle to C++ TSL2561 class.
  */
-TSL2561 *mgos_tsl2561_create(uint8_t addr);
+TSL2561 *mgos_tsl25721_create(uint8_t addr);
 
 /* TSL2561 Functions */
 
@@ -76,17 +76,17 @@ TSL2561 *mgos_tsl2561_create(uint8_t addr);
  *
  * Returns 1 (true) if the above actions were successful, 0 (false) otherwise.
  */
-int mgos_tsl2561_begin(TSL2561 *tsl);
+int mgos_tsl25721_begin(TSL25721 *tsl);
 
 /*
  * Send a command to sensor to enable it
  */
-void mgos_tsl2561_enable(TSL2561 *tsl);
+void mgos_tsl25721_enable(TSL25721 *tsl);
 
 /*
  * Send a command to the sensor to disable it
  */
-void mgos_tsl2561_disable(TSL2561 *tsl);
+void mgos_tsl25721_disable(TSL25721 *tsl);
 
 /*
  * Get the luminosity of the desired channel.
@@ -99,13 +99,13 @@ void mgos_tsl2561_disable(TSL2561 *tsl);
  * Returns -1 for any error.
  *
  */
-int mgos_tsl2561_getLuminosity(TSL2561 *tsl, int channel);
+int mgos_tsl25721_getLuminosity(TSL25721 *tsl, int channel);
 
 /*
  * Return the value of both channels in a 32-bit unsigned integer.  The upper (lower)
  * 16 bits contain value of channel 1 (channel 0).
  */
-int mgos_tsl2561_getFullLuminosity(TSL2561 *tsl);
+int mgos_tsl25721_getFullLuminosity(TSL25721 *tsl);
 
 /*
  * Sets the sensor integration time.  Allowed values are:
@@ -113,24 +113,24 @@ int mgos_tsl2561_getFullLuminosity(TSL2561 *tsl);
  * - 0x01 or `TSL2561_INTEGRATIONTIME_101MS` - 101 ms - use w. either gain setting and med. light conditions
  * - 0x02 or `TSL2561_INTEGRATIONTIME_402MS` - 402 ms - use w. 16x gain and low light conditions
  */
-void mgos_tsl2561_setIntegrationTime(TSL2561 *tsl, int timing);
+void mgos_tsl25721_setIntegrationTime(TSL25721 *tsl, int timing);
 
 /*
  * Sets the sensor gain.  Allowed values are:
  * - 0x00 or `TSL2561_GAIN_0X` - no gain, use for bright lighting conditions
  * - 0x10 or `TSL2561_GAIN_16X` - 16x gain, low light conditions
  */
-void mgos_tsl2561_setGain(TSL2561 *tsl, int gain);
+void mgos_tsl25721_setGain(TSL25721 *tsl, int gain);
 
 /*
  * Convert sensor reading into lux value.
  */
-uint32_t mgos_tsl2561_calculateLux(TSL2561 *tsl, uint16_t ch0, uint16_t ch1);
+uint32_t mgos_tsl25721_calculateLux(TSL25721 *tsl, uint16_t ch0, uint16_t ch1);
 
 /*
  * Delete TSL2561 handle and its resources.
  */
-void mgos_tsl2561_close(TSL2561 *tsl);
+void mgos_tsl25721_close(TSL25721 *tsl);
 
 // TODO - implement the following
 //void mgos_tsl2561_enableAutoRange(TSL2561 *tsl, bool enable);
