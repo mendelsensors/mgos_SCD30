@@ -110,7 +110,7 @@ void TSL25721::disable(void) {
 }
 
 
-void TSL2561::setGain(tsl25721Gain_t gain) {
+void TSL25721::setGain(tsl25721Gain_t gain) {
     if (!_initialized) begin();
 
     enable();
@@ -161,7 +161,7 @@ uint32_t TSL25721::calculateLux(uint16_t ch0, uint16_t ch1) {
 
     unsigned int b, m;
 
-#ifdef TSL2561_PACKAGE_CS
+#ifdef TSL25721_PACKAGE_CS
     if ((ratio >= 0) && (ratio <= TSL25721_LUX_K1C))
       {b=TSL25721_LUX_B1C; m=TSL25721_LUX_M1C;}
     else if (ratio <= TSL25721_LUX_K2C)
