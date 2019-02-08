@@ -1,7 +1,9 @@
 
-# Arduino Adafruit TSL2561 library for Mongoose OS
+# Arduino Adafruit TSL25721 library for Mongoose OS
 
-This is a port of the [Adafruit Arduino driver for the TSL2561 sensor](https://github.com/adafruit/TSL2561-Arduino-Library) ported to run on the [Mongoose OS ecosystem](https://mongoose-os.com/docs/reference/api.html).
+Adapted from TSL2561 for TSL25721
+
+This was a port of the [Adafruit Arduino driver for the TSL2561 sensor](https://github.com/adafruit/TSL2561-Arduino-Library) ported to run on the [Mongoose OS ecosystem](https://mongoose-os.com/docs/reference/api.html).
 
 Usage is extremely simple....
 
