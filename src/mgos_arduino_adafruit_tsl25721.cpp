@@ -1,7 +1,7 @@
 #include "mgos_arduino_adafruit_tsl25721.h"
 
 
-TSL2561 *mgos_tsl25721_create(uint8_t addr = TSL25721_ADDR_FLOAT) {
+TSL25721 *mgos_tsl25721_create(uint8_t addr = TSL25721_ADDR_FLOAT) {
     return new TSL25721(addr);
 }
 
