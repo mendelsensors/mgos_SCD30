@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*! 
-    @file     tsl2561.c
+    @file     tsl25721.c
     @author   K. Townsend (microBuilder.eu / adafruit.com)
 
     @section LICENSE
@@ -44,28 +44,28 @@
 
 #include <stdlib.h>
 
-#include "TSL2561.h"
+#include "TSL25721.h"
 #include "mgos.h"
 
-TSL2561::TSL2561(uint8_t addr) {
+TSL25721::TSL25721(uint8_t addr) {
     _addr = addr;
     _initialized = false;
-    _integration = TSL2561_INTEGRATIONTIME_13MS;
-    _gain = TSL2561_GAIN_16X;
+    _integration = TSL25721_INTEGRATIONTIME_13MS;
+    _gain = TSL25721_GAIN_16X;
 
     // we cant do wire initialization till later, because we havent loaded Wire yet
 }
 
-boolean TSL2561::begin(void) {
+boolean TSL25721::begin(void) {
 	//LOG(LL_INFO, ("test2"));
     Wire.begin();
 
     // Initialise I2C
     Wire.beginTransmission(_addr);
 #if ARDUINO >= 100
-    Wire.write(TSL2561_COMMAND_BIT | TSL2561_REGISTER_ID);
+    Wire.write(TSL25721_COMMAND_BIT | TSL25721_REGISTER_ID);
 #else
-    Wire.send(TSL2561_COMMAND_BIT | TSL2561_REGISTER_ID);
+    Wire.send(TSL25721_COMMAND_BIT | TSL25721_REGISTER_ID);
 #endif
     Wire.endTransmission();
     Wire.requestFrom(_addr, 1);
@@ -95,53 +95,53 @@ boolean TSL2561::begin(void) {
     return true;
 }
 
-void TSL2561::enable(void) {
+void TSL25721::enable(void) {
     if (!_initialized) begin();
 
     // Enable the device by setting the control bit to 0x03
-    write8(TSL2561_COMMAND_BIT | TSL2561_REGISTER_CONTROL, TSL2561_CONTROL_POWERON);
+    write8(TSL25721_COMMAND_BIT | TSL25721_REGISTER_CONTROL, TSL25721_CONTROL_POWERON);
 }
 
-void TSL2561::disable(void) {
+void TSL25721::disable(void) {
     if (!_initialized) begin();
 
     // Disable the device by setting the control bit to 0x03
-    write8(TSL2561_COMMAND_BIT | TSL2561_REGISTER_CONTROL, TSL2561_CONTROL_POWEROFF);
+    write8(TSL25721_COMMAND_BIT | TSL25721_REGISTER_CONTROL, TSL25721_CONTROL_POWEROFF);
 }
 
 
-void TSL2561::setGain(tsl2561Gain_t gain) {
+void TSL2561::setGain(tsl25721Gain_t gain) {
     if (!_initialized) begin();
 
     enable();
     _gain = gain;
-    write8(TSL2561_COMMAND_BIT | TSL2561_REGISTER_TIMING, _integration | _gain);
+    write8(TSL25721_COMMAND_BIT | TSL25721_REGISTER_TIMING, _integration | _gain);
     disable();
 }
 
-void TSL2561::setTiming(tsl2561IntegrationTime_t integration) {
+void TSL25721::setTiming(tsl25721IntegrationTime_t integration) {
     if (!_initialized) begin();
 
     enable();
     _integration = integration;
-    write8(TSL2561_COMMAND_BIT | TSL2561_REGISTER_TIMING, _integration | _gain);
+    write8(TSL25721_COMMAND_BIT | TSL25721_REGISTER_TIMING, _integration | _gain);
     disable();
 }
 
-uint32_t TSL2561::calculateLux(uint16_t ch0, uint16_t ch1) {
+uint32_t TSL25721::calculateLux(uint16_t ch0, uint16_t ch1) {
     unsigned long chScale;
     unsigned long channel1;
     unsigned long channel0;
 
     switch (_integration) {
-        case TSL2561_INTEGRATIONTIME_13MS:
-            chScale = TSL2561_LUX_CHSCALE_TINT0;
+        case TSL25721_INTEGRATIONTIME_13MS:
+            chScale = TSL25721_LUX_CHSCALE_TINT0;
             break;
-        case TSL2561_INTEGRATIONTIME_101MS:
-            chScale = TSL2561_LUX_CHSCALE_TINT1;
+        case TSL25721_INTEGRATIONTIME_101MS:
+            chScale = TSL25721_LUX_CHSCALE_TINT1;
             break;
         default: // No scaling ... integration time = 402ms
-            chScale = (1 << TSL2561_LUX_CHSCALE);
+            chScale = (1 << TSL25721_LUX_CHSCALE);
             break;
     }
 
@@ -149,12 +149,12 @@ uint32_t TSL2561::calculateLux(uint16_t ch0, uint16_t ch1) {
     if (!_gain) chScale = chScale << 4;
 
     // scale the channel values
-    channel0 = (ch0 * chScale) >> TSL2561_LUX_CHSCALE;
-    channel1 = (ch1 * chScale) >> TSL2561_LUX_CHSCALE;
+    channel0 = (ch0 * chScale) >> TSL25721_LUX_CHSCALE;
+    channel1 = (ch1 * chScale) >> TSL25721_LUX_CHSCALE;
 
     // find the ratio of the channel values (Channel1/Channel0)
     unsigned long ratio1 = 0;
-    if (channel0 != 0) ratio1 = (channel1 << (TSL2561_LUX_RATIOSCALE + 1)) / channel0;
+    if (channel0 != 0) ratio1 = (channel1 << (TSL25721_LUX_RATIOSCALE + 1)) / channel0;
 
     // round the ratio value
     unsigned long ratio = (ratio1 + 1) >> 1;
@@ -162,54 +162,54 @@ uint32_t TSL2561::calculateLux(uint16_t ch0, uint16_t ch1) {
     unsigned int b, m;
 
 #ifdef TSL2561_PACKAGE_CS
-    if ((ratio >= 0) && (ratio <= TSL2561_LUX_K1C))
-      {b=TSL2561_LUX_B1C; m=TSL2561_LUX_M1C;}
-    else if (ratio <= TSL2561_LUX_K2C)
-      {b=TSL2561_LUX_B2C; m=TSL2561_LUX_M2C;}
-    else if (ratio <= TSL2561_LUX_K3C)
-      {b=TSL2561_LUX_B3C; m=TSL2561_LUX_M3C;}
-    else if (ratio <= TSL2561_LUX_K4C)
-      {b=TSL2561_LUX_B4C; m=TSL2561_LUX_M4C;}
-    else if (ratio <= TSL2561_LUX_K5C)
-      {b=TSL2561_LUX_B5C; m=TSL2561_LUX_M5C;}
+    if ((ratio >= 0) && (ratio <= TSL25721_LUX_K1C))
+      {b=TSL25721_LUX_B1C; m=TSL25721_LUX_M1C;}
+    else if (ratio <= TSL25721_LUX_K2C)
+      {b=TSL25721_LUX_B2C; m=TSL25721_LUX_M2C;}
+    else if (ratio <= TSL25721_LUX_K3C)
+      {b=TSL25721_LUX_B3C; m=TSL25721_LUX_M3C;}
+    else if (ratio <= TSL25721_LUX_K4C)
+      {b=TSL25721_LUX_B4C; m=TSL25721_LUX_M4C;}
+    else if (ratio <= TSL25721_LUX_K5C)
+      {b=TSL25721_LUX_B5C; m=TSL25721_LUX_M5C;}
     else if (ratio <= TSL2561_LUX_K6C)
-      {b=TSL2561_LUX_B6C; m=TSL2561_LUX_M6C;}
+      {b=TSL25721_LUX_B6C; m=TSL25721_LUX_M6C;}
     else if (ratio <= TSL2561_LUX_K7C)
-      {b=TSL2561_LUX_B7C; m=TSL2561_LUX_M7C;}
+      {b=TSL25721_LUX_B7C; m=TSL25721_LUX_M7C;}
     else if (ratio > TSL2561_LUX_K8C)
-      {b=TSL2561_LUX_B8C; m=TSL2561_LUX_M8C;}
+      {b=TSL25721_LUX_B8C; m=TSL25721_LUX_M8C;}
 #else
-    if ((ratio >= 0) && (ratio <= TSL2561_LUX_K1T)) {
-        b = TSL2561_LUX_B1T;
-        m = TSL2561_LUX_M1T;
+    if ((ratio >= 0) && (ratio <= TSL25721_LUX_K1T)) {
+        b = TSL25721_LUX_B1T;
+        m = TSL25721_LUX_M1T;
     }
-    else if (ratio <= TSL2561_LUX_K2T) {
-        b = TSL2561_LUX_B2T;
-        m = TSL2561_LUX_M2T;
+    else if (ratio <= TSL25721_LUX_K2T) {
+        b = TSL25721_LUX_B2T;
+        m = TSL25721_LUX_M2T;
     }
-    else if (ratio <= TSL2561_LUX_K3T) {
-        b = TSL2561_LUX_B3T;
-        m = TSL2561_LUX_M3T;
+    else if (ratio <= TSL25721_LUX_K3T) {
+        b = TSL25721_LUX_B3T;
+        m = TSL25721_LUX_M3T;
     }
-    else if (ratio <= TSL2561_LUX_K4T) {
-        b = TSL2561_LUX_B4T;
-        m = TSL2561_LUX_M4T;
+    else if (ratio <= TSL25721_LUX_K4T) {
+        b = TSL25721_LUX_B4T;
+        m = TSL25721_LUX_M4T;
     }
-    else if (ratio <= TSL2561_LUX_K5T) {
-        b = TSL2561_LUX_B5T;
-        m = TSL2561_LUX_M5T;
+    else if (ratio <= TSL25721_LUX_K5T) {
+        b = TSL25721_LUX_B5T;
+        m = TSL25721_LUX_M5T;
     }
-    else if (ratio <= TSL2561_LUX_K6T) {
-        b = TSL2561_LUX_B6T;
-        m = TSL2561_LUX_M6T;
+    else if (ratio <= TSL25721_LUX_K6T) {
+        b = TSL25721_LUX_B6T;
+        m = TSL25721_LUX_M6T;
     }
-    else if (ratio <= TSL2561_LUX_K7T) {
-        b = TSL2561_LUX_B7T;
-        m = TSL2561_LUX_M7T;
+    else if (ratio <= TSL25721_LUX_K7T) {
+        b = TSL25721_LUX_B7T;
+        m = TSL25721_LUX_M7T;
     }
-    else if (ratio > TSL2561_LUX_K8T) {
-        b = TSL2561_LUX_B8T;
-        m = TSL2561_LUX_M8T;
+    else if (ratio > TSL25721_LUX_K8T) {
+        b = TSL25721_LUX_B8T;
+        m = TSL25721_LUX_M8T;
     }
 #endif
 
@@ -220,16 +220,16 @@ uint32_t TSL2561::calculateLux(uint16_t ch0, uint16_t ch1) {
     if (temp < 0) temp = 0;
 
     // round lsb (2^(LUX_SCALE-1))
-    temp += (1 << (TSL2561_LUX_LUXSCALE - 1));
+    temp += (1 << (TSL25721_LUX_LUXSCALE - 1));
 
     // strip off fractional portion
-    uint32_t lux = temp >> TSL2561_LUX_LUXSCALE;
+    uint32_t lux = temp >> TSL25721_LUX_LUXSCALE;
 
     // Signal I2C had no errors
     return lux;
 }
 
-uint32_t TSL2561::getFullLuminosity(void) {
+uint32_t TSL25721::getFullLuminosity(void) {
     if (!_initialized) begin();
 
     // Enable the device by setting the control bit to 0x03
@@ -237,10 +237,10 @@ uint32_t TSL2561::getFullLuminosity(void) {
 
     // Wait x ms for ADC to complete
     switch (_integration) {
-        case TSL2561_INTEGRATIONTIME_13MS:
+        case TSL25721_INTEGRATIONTIME_13MS:
             delay(14);
             break;
-        case TSL2561_INTEGRATIONTIME_101MS:
+        case TSL25721_INTEGRATIONTIME_101MS:
             delay(102);
             break;
         default:
@@ -249,16 +249,16 @@ uint32_t TSL2561::getFullLuminosity(void) {
     }
 
     uint32_t x;
-    x = read16(TSL2561_COMMAND_BIT | TSL2561_WORD_BIT | TSL2561_REGISTER_CHAN1_LOW);
+    x = read16(TSL25721_COMMAND_BIT | TSL25721_WORD_BIT | TSL25721_REGISTER_CHAN1_LOW);
     x <<= 16;
-    x |= read16(TSL2561_COMMAND_BIT | TSL2561_WORD_BIT | TSL2561_REGISTER_CHAN0_LOW);
+    x |= read16(TSL25721_COMMAND_BIT | TSL25721_WORD_BIT | TSL25721_REGISTER_CHAN0_LOW);
 
     disable();
 
     return x;
 }
 
-uint16_t TSL2561::getLuminosity(uint8_t channel) {
+uint16_t TSL25721::getLuminosity(uint8_t channel) {
 
     uint32_t x = getFullLuminosity();
 
@@ -278,7 +278,7 @@ uint16_t TSL2561::getLuminosity(uint8_t channel) {
 }
 
 
-uint16_t TSL2561::read16(uint8_t reg) {
+uint16_t TSL25721::read16(uint8_t reg) {
     uint16_t x;
     uint16_t t;
 
@@ -304,7 +304,7 @@ uint16_t TSL2561::read16(uint8_t reg) {
 }
 
 
-void TSL2561::write8(uint8_t reg, uint8_t value) {
+void TSL25721::write8(uint8_t reg, uint8_t value) {
     Wire.beginTransmission(_addr);
 #if ARDUINO >= 100
     Wire.write(reg);
