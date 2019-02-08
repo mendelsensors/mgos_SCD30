@@ -133,10 +133,10 @@ uint32_t mgos_tsl25721_calculateLux(TSL25721 *tsl, uint16_t ch0, uint16_t ch1);
 void mgos_tsl25721_close(TSL25721 *tsl);
 
 // TODO - implement the following
-//void mgos_tsl2561_enableAutoRange(TSL2561 *tsl, bool enable);
+//void mgos_tsl2561_enableAutoRange(TSL25721 *tsl, bool enable);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif //ARDUINO_ADAFRUIT_TSL2561_MGOS_ARDUINO_ADAFRUIT_TSL2561_H
+#endif //ARDUINO_ADAFRUIT_TSL25721_MGOS_ARDUINO_ADAFRUIT_TSL2561_H
