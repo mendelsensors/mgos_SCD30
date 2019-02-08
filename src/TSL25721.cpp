@@ -99,7 +99,9 @@ void TSL25721::enable(void) {
     if (!_initialized) begin();
 
     // Enable the device by setting the control bit to 0x03
-    write8(TSL25721_COMMAND_BIT | TSL25721_REGISTER_CONTROL, TSL25721_CONTROL_POWERON);
+    //write8(TSL25721_COMMAND_BIT | TSL25721_REGISTER_CONTROL, TSL25721_CONTROL_POWERON);
+    write8(TSL25721_COMMAND_BIT | TSL25721_REGISTER_ENABLE, TSL25721_CONTROL_POWERON);
+	
 }
 
 void TSL25721::disable(void) {
