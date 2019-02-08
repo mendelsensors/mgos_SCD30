@@ -175,9 +175,9 @@ public:
 
     uint32_t calculateLux(uint16_t ch0, uint16_t ch1);
 
-    void setTiming(tsl2561IntegrationTime_t integration);
+    void setTiming(tsl25721IntegrationTime_t integration);
 
-    void setGain(tsl2561Gain_t gain);
+    void setGain(tsl25721Gain_t gain);
 
     uint16_t getLuminosity(uint8_t channel);
 
@@ -185,8 +185,8 @@ public:
 
 private:
     int8_t _addr;
-    tsl2561IntegrationTime_t _integration;
-    tsl2561Gain_t _gain;
+    tsl25721IntegrationTime_t _integration;
+    tsl25721Gain_t _gain;
 
     boolean _initialized;
 };
