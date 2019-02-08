@@ -66,9 +66,9 @@ bool mgos_tsl25721_init(void);
  *
  * Return value: opaque pointer handle to C++ TSL2561 class.
  */
-TSL2561 *mgos_tsl25721_create(uint8_t addr);
+TSL25721 *mgos_tsl25721_create(uint8_t addr);
 
-/* TSL2561 Functions */
+/* TSL25721 Functions */
 
 /*
  * Checks that the sensor exists at the address it was created on and applies default settings for
