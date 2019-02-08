@@ -108,7 +108,9 @@ void TSL25721::disable(void) {
     if (!_initialized) begin();
 
     // Disable the device by setting the control bit to 0x03
-    write8(TSL25721_COMMAND_BIT | TSL25721_REGISTER_CONTROL, TSL25721_CONTROL_POWEROFF);
+    //write8(TSL25721_COMMAND_BIT | TSL25721_REGISTER_CONTROL, TSL25721_CONTROL_POWEROFF);
+    write8(TSL25721_COMMAND_BIT | TSL25721_REGISTER_ENABLE, TSL25721_CONTROL_POWEROFF);
+	
 }
 
 
