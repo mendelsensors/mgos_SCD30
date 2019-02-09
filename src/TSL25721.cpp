@@ -261,16 +261,16 @@ uint32_t TSL25721::getFullLuminosity(void) {
     // Wait x ms for ADC to complete
     switch (_integration) {
         case TSL25721_INTEGRATIONTIME_2MS:
-            delay(3);
+            delay(5);
             break;
         case TSL25721_INTEGRATIONTIME_27MS:
-            delay(28);
+            delay(30);
             break;
         case TSL25721_INTEGRATIONTIME_699MS:
-            delay(700);
+            delay(705);
             break;
         default:
-            delay(700);
+            delay(705);
             break;
     }
 
