@@ -37,6 +37,14 @@ void mgos_tsl25721_setIntegrationTime(TSL25721 *tsl, int time) {
     }
 }
 
+void mgos_tsl25721_getStatus(TSL25721 *tsl) {
+    if (tsl != nullptr) {
+        tsl->getStatus();
+    }
+}
+
+
+
 void mgos_tsl25721_setGain(TSL25721 *tsl, int gain) {
     if (tsl != nullptr) {
         tsl->setGain((tsl25721Gain_t) gain);
