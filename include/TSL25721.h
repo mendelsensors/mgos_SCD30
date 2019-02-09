@@ -68,7 +68,7 @@
 #define TSL25721_WORD_BIT          (0x20)    // 1 = read/write word (rather than byte)
 #define TSL25721_BLOCK_BIT         (0x10)    // 1 = using block read/write
 
-#define TSL25721_CONTROL_POWERON   (0x03)
+#define TSL25721_CONTROL_POWERON   (0x01)
 #define TSL25721_CONTROL_POWEROFF  (0x00)
 
 #define TSL25721_LUX_LUXSCALE      (14)      // Scale by 2^14
