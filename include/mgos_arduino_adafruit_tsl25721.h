@@ -115,6 +115,10 @@ int mgos_tsl25721_getFullLuminosity(TSL25721 *tsl);
  */
 void mgos_tsl25721_setIntegrationTime(TSL25721 *tsl, int timing);
 
+  
+void mgos_tsl25721_getStatus(TSL25721 *tsl);
+
+  
 /*
  * Sets the sensor gain.  Allowed values are:
  * - 0x00 or `TSL2561_GAIN_0X` - no gain, use for bright lighting conditions
