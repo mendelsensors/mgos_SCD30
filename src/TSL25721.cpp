@@ -154,11 +154,14 @@ uint32_t TSL25721::calculateLux(uint16_t ch0, uint16_t ch1) {
     unsigned long channel0;
 
     switch (_integration) {
-        case TSL25721_INTEGRATIONTIME_27MS:
-            chScale = 0xf6;//TSL25721_LUX_CHSCALE_TINT0;
+        case TSL25721_INTEGRATIONTIME_2MS:
+            chScale = TSL25721_LUX_CHSCALE_TINT0;
             break;
-        case TSL25721_INTEGRATIONTIME_101MS:
+        case TSL25721_INTEGRATIONTIME_27MS:
             chScale = TSL25721_LUX_CHSCALE_TINT1;
+            break;
+        case TSL25721_INTEGRATIONTIME_699MS:
+            chScale = TSL25721_LUX_CHSCALE_TINT2;
             break;
         default: // No scaling ... integration time = 402ms
             chScale = (1 << TSL25721_LUX_CHSCALE);
@@ -257,14 +260,17 @@ uint32_t TSL25721::getFullLuminosity(void) {
 
     // Wait x ms for ADC to complete
     switch (_integration) {
+        case TSL25721_INTEGRATIONTIME_2MS:
+            delay(3);
+            break;
         case TSL25721_INTEGRATIONTIME_27MS:
             delay(28);
             break;
-        case TSL25721_INTEGRATIONTIME_101MS:
-            delay(102);
+        case TSL25721_INTEGRATIONTIME_699MS:
+            delay(700);
             break;
         default:
-            delay(403);
+            delay(700);
             break;
     }
 
