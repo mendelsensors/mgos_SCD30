@@ -159,7 +159,9 @@ typedef enum {
 
 typedef enum {
     TSL25721_GAIN_0X = 0x00,    // No gain
-    TSL25721_GAIN_16X = 0x02//0x10,    // 16x gain
+    TSL25721_GAIN_8X = 0x01,    // 8x gain
+    TSL25721_GAIN_16X = 0x02,    // 16x gain
+    TSL25721_GAIN_120X = 0x03,    // 120x gain
 }
         tsl25721Gain_t;
 
