@@ -176,6 +176,8 @@ public:
 
     void write8(uint8_t r, uint8_t v);
 
+    uint8_t read8(uint8_t reg);
+
     uint16_t read16(uint8_t reg);
 
     uint32_t calculateLux(uint16_t ch0, uint16_t ch1);
