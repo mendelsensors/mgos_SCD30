@@ -150,10 +150,9 @@ enum {
 };
 
 typedef enum {
-    //TSL25721_INTEGRATIONTIME_13MS = 0x00,    // 13.7ms
+    TSL25721_INTEGRATIONTIME_2MS = 0xff,    // 2.73ms
     TSL25721_INTEGRATIONTIME_27MS = 0xf6,    // 27.3ms
-    TSL25721_INTEGRATIONTIME_101MS = 0x01,    // 101ms
-    TSL25721_INTEGRATIONTIME_402MS = 0x02     // 402ms
+    TSL25721_INTEGRATIONTIME_699MS = 0x00    // 699ms
 }
         tsl25721IntegrationTime_t;
 
