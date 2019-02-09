@@ -114,6 +114,17 @@ void TSL25721::disable(void) {
 	
 }
 
+void TSL25721::getStatus(void) {
+    uint32_t x;
+
+    if (!_initialized) begin();
+
+    enable();
+    x = read8(TSL25721_COMMAND_BIT | TSL25721_STATUS);
+    printf("TSL25721 status=0x%x\n",x);
+
+    disable();
+}
 
 void TSL25721::setGain(tsl25721Gain_t gain) {
     if (!_initialized) begin();
@@ -309,6 +320,28 @@ uint16_t TSL25721::read16(uint8_t reg) {
     x |= t;
     return x;
 }
+
+
+uint8_t TSL25721::read8(uint8_t reg) {
+    uint8_t x;
+
+    Wire.beginTransmission(_addr);
+#if ARDUINO >= 100
+    Wire.write(reg);
+#else
+    Wire.send(reg);
+#endif
+    Wire.endTransmission();
+
+    Wire.requestFrom(_addr, 2);
+#if ARDUINO >= 100
+    x = Wire.read();
+#else
+    x = Wire.receive();
+#endif
+    return x;
+}
+
 
 
 void TSL25721::write8(uint8_t reg, uint8_t value) {
