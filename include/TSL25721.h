@@ -184,6 +184,8 @@ public:
 
     void setGain(tsl25721Gain_t gain);
 
+    void getStatus(void);
+    
     uint16_t getLuminosity(uint8_t channel);
 
     uint32_t getFullLuminosity();
