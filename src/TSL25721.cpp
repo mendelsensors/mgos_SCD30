@@ -122,9 +122,33 @@ void TSL25721::getStatus(void) {
     if (!_initialized) begin();
 
     enable();
-    x = read8(TSL25721_COMMAND_BIT | TSL25721_STATUS);
-    printf("TSL25721 status=0x%x\n",x);
+    x = read8(TSL25721_COMMAND_BIT | TSL25721_REGISTER_ENABLE);
+    printf("TSL25721 ENABLE (0x00)=0x%x\n",x);
 
+    x = read8(TSL25721_COMMAND_BIT | TSL25721_REGISTER_ATIME);
+    printf("TSL25721 ATIME (0x01)=0x%x\n",x);
+
+    x = read8(TSL25721_COMMAND_BIT | TSL25721_REGISTER_WTIME);
+    printf("TSL25721 WTIME (0x03)=0x%x\n",x);
+
+    x = read8(TSL25721_COMMAND_BIT | TSL25721_REGISTER_CONFIG);
+    printf("TSL25721 CONFIG (0x0D)=0x%x\n",x);
+
+    x = read8(TSL25721_COMMAND_BIT | TSL25721_REGISTER_CONTROL);
+    printf("TSL25721 CONTROL (0x0F)=0x%x\n",x);
+
+    x = read8(TSL25721_COMMAND_BIT | TSL25721_REGISTER_ATIME);
+    printf("TSL25721 ATIME (0x00)=0x%x\n",x);
+
+    x = read8(TSL25721_COMMAND_BIT | TSL25721_STATUS);
+    printf("TSL25721 STATUS=0x%x\n",x);
+
+    x = read16(TSL25721_COMMAND_BIT | TSL25721_WORD_BIT | TSL25721_REGISTER_CHAN0_LOW);	
+    printf("TSL25721 CHAN0=0x%x\n",x);
+
+    x = read16(TSL25721_COMMAND_BIT | TSL25721_WORD_BIT | TSL25721_REGISTER_CHAN1_LOW);	
+    printf("TSL25721 CHAN1=0x%x\n",x);
+	
     disable();
 }
 
