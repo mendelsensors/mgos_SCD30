@@ -51,7 +51,8 @@ TSL25721::TSL25721(uint8_t addr) {
     _addr = addr;
     _initialized = false;
     //_integration = TSL25721_INTEGRATIONTIME_13MS;
-    _integration = TSL25721_INTEGRATIONTIME_27MS;
+    //_integration = TSL25721_INTEGRATIONTIME_27MS;
+    _integration = TSL25721_INTEGRATIONTIME_2MS;
     //_gain = TSL25721_GAIN_16X;
     _gain = TSL25721_GAIN_120X;
 
