@@ -15,7 +15,7 @@ typedef struct SCD30Tag SCD30;
 extern "C" {
 #endif
 
-bool mgos_SCD30_init(void);
+bool mgos_mgos_SCD30_init(void);
 
 
 #ifdef __cplusplus
