@@ -61,7 +61,7 @@ boolean SCD30::begin(TwoWire &wirePort)
   //Check for device to respond correctly
   if(beginMeasuring() == true) //Start continuous measurements
   {
-	setMeasurementInterval(1); //1 second between measurements  - tph was 2
+	setMeasurementInterval(2); //2 seconds between measurements  - tph needs to be 2-1800s
 	setAutoSelfCalibration(true); //Enable auto-self-calibration
 	
 	return (true);
