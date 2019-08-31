@@ -1,12 +1,12 @@
 //
 // Created by pedalPusher68 <bradley.1.smith@gmail.com> on 11/10/17.
 //
-#ifndef ARDUINO_ADAFRUIT_TSL25721_MGOS_ARDUINO_ADAFRUIT_TSL25721_H
-#define ARDUINO_ADAFRUIT_TSL25721_MGOS_ARDUINO_ADAFRUIT_TSL25721_H
+#ifndef MGOS_ARDUINO_SCD30_H
+#define MGOS_ARDUINO_SCD30_H
 
 
 #ifdef __cplusplus
-#include "TSL25721.h"
+#include "scd30.h"
 #else
 typedef struct TSL25721Tag TSL25721;
 #endif
