@@ -252,7 +252,7 @@ uint16_t SCD30::readRegister(uint16_t registerAddress)
   _i2cPort->write(registerAddress >> 8); //MSB
   _i2cPort->write(registerAddress & 0xFF); //LSB
   if (_i2cPort->endTransmission() != 0)
-    return (0); //Sensor did not ACK
+    return (-1); //Sensor did not ACK
 
   _i2cPort->requestFrom((uint8_t)SCD30_ADDRESS, (uint8_t)2);
   if (_i2cPort->available())
